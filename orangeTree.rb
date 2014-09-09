@@ -1,114 +1,86 @@
-class Dragon
+class OrangeTree
 
-  def initialize name
-    @name = name
-    @asleep = false
-    @stuffInBelly     = 10 
-    @stuffInIntestine =  0 
+  def initialize 
+    @height = 1
+    @oranges = 0
+    @age = 0
+    @basket = 0
 
-    puts @name + ' is born.'
+    puts 'You\'ve stumbled across a baby orange tree. You decide to adopt it.'
   end
 
-  def feed
-    puts 'You feed ' + @name + '.'
-    @stuffInBelly = 10
-    passageOfTime
-  end
-
-  def walk
-    puts 'You walk ' + @name + '.'
-    @stuffInIntestine = 0
-    passageOfTime
-  end
-
-  def putToBed
-    puts 'You put ' + @name + ' to bed.'
-    @asleep = true
-    3.times do
-      if @asleep
-        passageOfTime
+  def oneYearPasses
+    if @age < 20
+      @age = @age + 1
+      @oranges = 0
+      if @height < 10
+        @height = @height + 1
       end
-      if @asleep
-        puts @name + ' snores, filling the room with smoke.'
+      if @age > 4 and @age < 8
+        @oranges = @oranges + 1
+      elsif @age > 8 and @age < 15
+        @oranges = @oranges + 5
+      elsif @age > 15 and @age < 20
+        @oranges = @oranges + 8
       end
-    end
-    if @asleep
-      @asleep = false
-      puts @name + ' wakes up slowly.'
-    end
-  end
-
-  def toss
-    puts 'You toss ' + @name + ' up into the air.'
-    puts 'He giggles, which singes your eyebrows.'
-    passageOfTime
-  end
-
-  def rock
-    puts 'You rock ' + @name + ' gently.'
-    @asleep = true
-    puts 'He briefly dozes off...'
-    passageOfTime
-    if @asleep
-      @asleep = false
-      puts '...but wakes when you stop.'
+    else 
+      puts 'The tree dies!'
+    exit
     end
   end
 
-  private
-
-  def hungry?
-    @stuffInBelly <= 2
-  end
-
-  def poopy?
-    @stuffInIntestine >= 8
-  end
-
-  def passageOfTime
-    if @stuffInBelly > 0
-      @stuffInBelly     = @stuffInBelly     - 1
-      @stuffInIntestine = @stuffInIntestine + 1
+  def pickAnOrange i
+    if @oranges >= i 
+      @oranges = @oranges - i
+      @basket = @basket + i
     else
-      if @asleep
-        @asleep = false
-        puts 'He wakes up suddenly!'
-      end
-      puts @name + ' is starving!  In desperation, he ate YOU!'
-      exit
+      puts 'There are ' + @oranges.to_s + ' left'
     end
+  end
 
-    if @stuffInIntestine >= 10
-      @stuffInIntestine = 0
-      puts 'Whoops!  ' + @name + ' had an accident...'
-    end
+  def countTheOranges
+    puts 'There are ' + @oranges.to_s + ' oranges on the tree.'
+  end
 
-    if hungry?
-      if @asleep
-        @asleep = false
-        puts 'He wakes up suddenly!'
-      end
-      puts @name + '\'s stomach grumbles...'
-    end
+  def countBasket
+    puts 'There are ' + @basket.to_s + ' oranges in your basket.'
+  end
 
-    if poopy?
-      if @asleep
-        @asleep = false
-        puts 'He wakes up suddenly!'
-      end
-      puts @name + ' does the potty dance...'
-    end
+  def getStats
+    puts 'height: ' + @height.to_s
+    puts 'oranges on tree: ' + @oranges.to_s
+    puts 'oranges in basket: ' + @basket.to_s
+    puts 'age of tree: ' + @age.to_s
+  end
+
+  def admire
+    puts 'It is a lovely tree!'
+    oneYearPasses
   end
 
 end
 
-pet = Dragon.new 'Norbert'
-pet.feed
-pet.toss
-pet.walk
-pet.putToBed
-pet.rock
-pet.putToBed
-pet.putToBed
-pet.putToBed
-pet.putToBed
+tree = OrangeTree.new
+
+while true
+  puts 'What do you wish to do? <pick> <countTree> <countBasket> <getStats> <exit> <admire>'
+  action = gets.chomp
+  if action == 'pick'
+    puts 'How many?'
+    i = gets.chomp
+    tree.pickAnOrange i.to_i
+  elsif action == 'countTree'
+    tree.countTheOranges
+  elsif action == 'countBasket'
+    tree.countBasket
+  elsif action == 'getStats'
+    tree.getStats
+  elsif action == 'exit'
+    puts 'Your tree immediately dies!'
+    exit
+  elsif action == 'admire'
+    tree.admire
+  else
+    puts 'Please choose a valid option <pick> <countTree> <countBasket> <getStats> <exit> <admire>'
+  end
+end
