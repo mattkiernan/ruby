@@ -1,7 +1,16 @@
-toast = Proc.new do 
-	puts 'Cheers!'
+def doSelfImportantly someProc
+	puts 'Everybody just HOLD ON! I have something to do...'
+	someProc.call
+	puts 'Ok everyone, I\'m done. Go on with what you were doing.'
 end
 
-toast.call
-toast.call
-toast.call
+sayHello = Proc.new do
+	puts 'Hello'
+end
+
+sayGoodbye = Proc.new do
+	puts 'goodbye'
+end
+
+doSelfImportantly sayHello
+doSelfImportantly sayGoodbye
